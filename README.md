@@ -2,9 +2,9 @@
 An Assistant for specially for windows and linux. 
 
 simple use : 
-> say : alexa search (any seach query)
+> say : alexa search (any search query)
 
-example : alexa seach who is elon mask
+example : alexa search who is elon mask
 
 
 > say : alexa youtube (any search query)
