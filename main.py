@@ -28,12 +28,12 @@ def user_voice_input():
                 # search on google
                 if "alexa search" in query.lower():
                     print(f"searching: {query}")
-                    webbrowser.open(f'https://www.google.com/search?q={query[11:]}')
+                    webbrowser.open(f'https://www.google.com/search?q={query[13:]}')
 
                 # search on google
                 if "alexa youtube" in query.lower():
                     print(f"searching: {query}")
-                    webbrowser.open(f'https://www.youtube.com/search?q={query[12:]}')
+                    webbrowser.open(f'https://www.youtube.com/search?q={query[14:]}')
 
                 # convert input into speech
                 engine.say(query) 
