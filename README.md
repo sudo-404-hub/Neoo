@@ -6,5 +6,3 @@ simple use :
 example : alexa seach who is elon mask
 > say : alexa youtube <any seach query>
 example :  alexa youtube new songs
-
-
