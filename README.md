@@ -7,7 +7,7 @@ simple use :
 example : alexa seach who is elon mask
 
 
-> say : alexa youtube (any seach query)
+> say : alexa youtube (any search query)
 
 
 example :  alexa youtube new songs
