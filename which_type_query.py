@@ -4,8 +4,8 @@ from AppOpener import open, close
 import google.generativeai as genai
 from change_wallpaper import set_wallpaper
 
-co = cohere.ClientV2("HOYhyQqPGGmJ6DaK4NuGu4CsPd2dECSGkYxsXGtC")
-genai.configure(api_key="AIzaSyAKioRUenPvC_I7kyHEgUEyaK-_lwCCOT0")
+co = cohere.ClientV2("YOUR_API_KEY") # cohere api key
+genai.configure(api_key="YOUR_API_KEY") # gemini api key
 
 model = genai.GenerativeModel("gemini-1.5-flash")
 
