@@ -43,8 +43,8 @@ python main.py
 | Date       | Feature                                                                             | Status |
 | ---------- | ----------------------------------------------------------------------------------- | ------ |
 | 12-01-2025 | Wallpaper change                                                                   | ✅     |
-| 13-01-2025 | Continuous background operation with wake word/shortcut activation                 | 🕒     |
-| 14-01-2025 | Wake-up assistant for scheduled tasks                                              | 🕒     |
+| 13-01-2025 | added quick access button                                                          | ✅     |
+| 14-01-2025 | Continuous background operation with wake word/shortcut activation                 | 🕒     |
 | 15-01-2025 | Daily automatic wallpaper change                                                   | 🕒     |
 | 16-01-2025 | Auto-play the first YouTube search result                                          | 🕒     |
 | 17-01-2025 | Volume control and dark/light theme switching                                      | 🕒     |
@@ -67,6 +67,6 @@ Contributions are welcome! Feel free to fork the repository, create a branch, an
 ---
 
 ### ⭐ Don't forget to star this repository if you find it useful!
-```
+---
 
 This version is more structured, professional, and user-friendly. Let me know if you'd like any additional tweaks!
