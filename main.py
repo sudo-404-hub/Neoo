@@ -1,15 +1,50 @@
-# main.py
 import threading
 import customtkinter as ctk
 import speech_recognition as sr 
 import pyttsx3
 from which_type_query import which_type_query_fun
+import os
+import subprocess  # To launch the side app
+from pystray import Icon, Menu, MenuItem
+from PIL import Image
+import sys
+
 # Initialize the text-to-speech engine
 engine = pyttsx3.init()
 
 # Configure the appearance of the customtkinter app
 ctk.set_appearance_mode("dark")  # Options: "dark", "light", "system"
 ctk.set_default_color_theme("green")  # Choose your color theme (or use "blue" or "dark-blue")
+
+# Function to open the side app and close the current app
+def open_side_app():
+    try:
+        # Replace 'side_app.py' with the path to your side app
+        subprocess.Popen(["python", "side_app.py"])  # Launch the side app
+        app.destroy()  # Close the current app's window
+        os._exit(0)  # Exit the current app process
+    except Exception as e:
+        print(f"Failed to open the side app: {e}")
+
+# Function to create the system tray icon
+def create_image():
+    return Image.open("my.png")  # Replace with the path to your image
+
+# Function to show the main app window
+def show_app():
+    app.deiconify()  # Show the app window
+
+# Function to run the tray icon
+def run_tray():
+    icon = Icon(
+        "AppIcon",
+        create_image(),
+        menu=Menu(
+            MenuItem("Open App", lambda: show_app()),
+            MenuItem("Exit", lambda icon, item: icon.stop())
+        )
+    )
+    icon.run()
 
 # Create the main application
 app = ctk.CTk()  # Initialize the customtkinter window
@@ -57,47 +92,36 @@ voice_state = False  # Initially 'Voice Off'
 
 # Function to toggle voice state
 def toggle_voice():
-    # convert min of to on
     global voice_state
     voice_button.configure(text="Mic On")
     app.update()
     voice_state = True
         
-    # function to take voice input
+    # Function to take voice input
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        # print("Listening...")
         try:
             audio = recognizer.listen(source)
-            input_text = recognizer.recognize_google(audio)# main output of voice 
-            # print(input_text) 
-
+            input_text = recognizer.recognize_google(audio)  # main output of voice
             voice_command(input_text)
             voice_button.configure(text="Voice Off")
             app.update()
             voice_state = False
-            
-
         except sr.UnknownValueError:
             print("Could not understand the audio.")
             voice_button.configure(text="Voice Off")
             app.update()
             voice_state = False
-            
         except sr.RequestError:
             print("Speech recognition service error.")
             voice_button.configure(text="Voice Off")
             app.update()
             voice_state = False
-            
-    # engine.runAndWait()
 
 
-# print the message in UI 
 def print_on_ui_terminal(message):
-    # Append the query and the output to the terminal
     terminal_output.configure(state="normal")  # Enable editing
-    terminal_output.insert("end", f"{message}\n")  # Show the query and output from the function
+    terminal_output.insert("end", f"{message}\n")  # Show the query and the output from the function
     terminal_output.configure(state="disabled")  # Disable editing
     terminal_output.see("end")  # Scroll to the bottom of the terminal
     command_input.delete(0, "end")  # Clear the input field
@@ -115,6 +139,7 @@ def voice_command(voice_text):
     except Exception as e:
         print_on_ui_terminal(f"Error: {str(e)}")  # Print error message on UI
 
+
 def run_command():
     command = command_input.get()
     if command.strip():  # Make sure the command is not empty
@@ -130,12 +155,24 @@ def run_command():
             print_on_ui_terminal(f"Error: {str(e)}")  # Print error message on UI
 
 
-
-
-
 # Bind the Enter key to the run_command function
 command_input.bind("<Return>", lambda event: run_command())
 
+# Function to hide the app when it loses focus
+def on_focus_out(event):
+    app.withdraw()  # Hide the app window
+
+# Function to bring the app back when needed (optional, e.g., using a hotkey or event)
+def show_app():
+    app.deiconify()  # Show the app window
+
+# Bind the FocusOut event to hide the app
+app.bind("<FocusOut>", on_focus_out)
+
+# Start the system tray in a separate thread
+tray_thread = threading.Thread(target=run_tray, daemon=True)
+tray_thread.start()
 
 # Run the application
 app.mainloop()
+
